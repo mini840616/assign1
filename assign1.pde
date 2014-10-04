@@ -10,7 +10,16 @@ int h = 50;
 // declare variables
 // --------------------------------------------
 // put your code inside here
-int totalScore = 0;
+
+//C-2
+int totalScore = 500;
+int rollScore = 0 ;
+
+//B-2
+int s1,s2,s3 ; //slot fruits count
+
+//A
+int p ; //probability
 
 // --------------------------------------------
 
@@ -49,19 +58,52 @@ void draw() {
       // -------------------------------------------------
       // put your code inside here
       
+      //B-1
+      totalScore = totalScore - 50 + rollScore ;
       
       // -------------------------------------------------
     }
+//    
     machine.roll();
     textSize(19);
     text("Stop",x,y);
-  
+
   } else {
     if (rolling){
       rolling = false;
       // stop rolling
       // -------------------------------------------------
       // put your code inside here
+       
+       //A
+       p = machine.probability(0.1);
+       if(p == 1){
+         machine.setSlotFruit(0,0);
+         machine.setSlotFruit(1,0);
+         machine.setSlotFruit(2,0); 
+       } else {
+         
+       //C-3
+         machine.setSlotFruit(0,int(random(6)));
+         machine.setSlotFruit(1,int(random(6)));
+         machine.setSlotFruit(2,int(random(6)));
+       }  
+       
+       //B-2
+       s1 = machine.getFruitCount(machine.slots[0][0].fruitId);
+       s2 = machine.getFruitCount(machine.slots[1][0].fruitId);
+       s3 = machine.getFruitCount(machine.slots[2][0].fruitId);
+       
+       
+       //C-4
+//       rollScore = machine.getSlotScore(machine.slots[0][0].fruitId) + machine.getSlotScore(machine.slots[1][0].fruitId) + machine.getSlotScore(machine.slots[2][0].fruitId);
+       rollScore = machine.slots[0][0].score * s1 + machine.slots[1][0].score * s2 + machine.slots[2][0].score * s3 ;
+       
+       
+       
+         
+       
+
       
  
  
@@ -69,11 +111,17 @@ void draw() {
       
       // -------------------------------------------------
     }
+    
+    //C-rollScore , copy from "show title"
+    textSize(20);
+    text("rollScore"+" "+":"+" " + rollScore,x, y-1.5*h);
+    
     machine.stop();
     fill(253,253,253);
     textSize(19);
     text("Roll",x,y);
   }
+ 
 
 }
 
@@ -83,7 +131,6 @@ void mousePressed() {
     button = !button;
   }  
 }
-
 
 
 
